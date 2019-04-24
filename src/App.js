@@ -9,7 +9,9 @@ class App extends Component {
   // Setting this.state.friends to the friends json array
   state = {
     friends,
-    clickedFriendIds: []
+    score: 0,
+    hiScore: 0 
+
   };
 
   // Function declaration 
@@ -22,19 +24,15 @@ class App extends Component {
   }
 
   // Function expression bc =
-  handleClick = id => {
-
-    
+  handleClick = hasBeenClicked => {
     // if the clicked image is in the array of clicked images
     // then reset
-    let hasBeenClicked = false
-    for (let i = 0; i < this.state.clickedFriendIds.length; i++) {
-      // if id === clickedFriendIds[i] set hasBeenClicked to true
-    }
+    
     if (hasBeenClicked) {
       // reset game
     } else {
-      // increase score
+      this.setState({ score: this.state.score + 1 });
+      console.log(hasBeenClicked)
     }
     
     // if the cliced image is not in the array of clicked images
@@ -47,11 +45,12 @@ class App extends Component {
 
   resetGame = () => {
     console.log('need to finish resetGame function')
+    this.setState({ score: 0});
   }
 
-  increaseScore = () => {
-    console.log('need to write increaseScore function')
-  }
+  // increaseScore = () => {
+  //   console.log('need to write increaseScore function')
+  // }
 
   // Map over this.state.friends and render a FriendCard component for each friend object
   render() {
@@ -59,13 +58,16 @@ class App extends Component {
        <div>
          <Navbar
            />
-
+           <div>
+           {this.state.score}
+           </div>
       <Wrapper>
         <Title>Friends List</Title>
         {this.state.friends.map(friend => (
           <FriendCard
             handleClick={this.handleClick}
             id={friend.id}
+            clicked={friend.clicked}
             key={friend.id}
             image={friend.image}
           />
